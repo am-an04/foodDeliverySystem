@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Orders</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"></link>
+</head>
+    <style>.cancel-btn {
+        background-color: #6dc366;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .cancel-btn:hover {
+        background-color: #11280e;
+      }
+      .delete-btn {
+        background: none;
+        border: none;
+        color: rgb(239, 15, 15);
+        cursor: pointer;
+        font-size: 16px;
+        margin-left: 10px;
+        }
+
+        .delete-btn:hover {
+        color: rgb(9, 1, 1);
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Orders for Restaurant {{ restaurant_id }}</h1>
+    {% if orders %}
+    {% for order in orders %}
+      <div class="order-card">
+        <p>Order ID: {{ order[0] }}</p>
+        <p>Status: {{ order[1] }}</p>
+  
+        <a href="{{ url_for('track_order', order_id=order[0]) }}" class="cancel-btn">Track Order</a>
+  
+        <form action="{{ url_for('cancel_order', order_id=order[0]) }}" method="post" style="display:inline;">
+          <button type="submit" class="cancel-btn">Cancel Order</button>
+        </form>
+  
+        <form action="{{ url_for('delete_order', order_id=order[0], restaurant_id=restaurant_id) }}" method="post" style="display:inline;">
+          <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this order?')">
+            <i class="fas fa-trash-alt"></i>
+          </button>
+        </form>
+      </div>
+      <hr>
+    {% endfor %}
+  {% else %}
+    <p>No orders found.</p>
+  {% endif %}
+  
+    
+</body>
+</html>

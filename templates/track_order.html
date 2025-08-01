@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Order - Food Ordering System</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; }
+        .container { background: #fff; padding: 20px; border-radius: 8px; max-width: 500px; margin: 50px auto; box-shadow: 0px 0px 10px rgba(0,0,0,0.1); text-align: center; }
+        h1 { color: #5cb85c; }
+        p { font-size: 18px; }
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #5cb85c;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #dec2a9;
+        }
+        .cancel-btn {
+            background-color: #70c56d;
+        }
+        .cancel-btn:hover {
+            background-color: #f92e27;
+        }
+        .alert {
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+        font-weight: bold;
+        }
+        .alert-success {
+        background-color: #d4edda;
+        color: #155724;
+        }
+        .alert-info {
+        background-color: #d1ecf1;
+        color: #0c5460;
+        }
+        .alert-error {
+        background-color: #f8d7da;
+        color: #721c24;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Order Status</h1>
+        <p><strong>Status:</strong> {{ status }}</p>
+        <p><strong>Payment Mode:</strong> {{ payment_mode }}</p>
+
+        <a href="{{ url_for('index') }}" class="btn">Back to Home</a>
+
+        {% if status != 'Cancelled' %}
+        <form action="{{ url_for('cancel_order', order_id=order_id) }}" method="POST" style="margin-top: 15px;">
+            <button type="submit" class="btn cancel-btn">Cancel Order</button>
+        </form>
+        {% endif %}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+           {% if messages %}
+             {% for category, message in messages %}
+               <div class="alert alert-{{ category }}">
+                 {{ message }}
+               </div>
+             {% endfor %}
+           {% endif %}
+        {% endwith %}
+
+    </div>
+    <script>
+        window.onload = function() {
+          const alerts = document.querySelectorAll('.alert');
+          alerts.forEach(function(alert) {
+            setTimeout(function() {
+              alert.style.display = 'none';
+            }, 3000);
+          });
+        };
+      </script>
+      
+</body>
+</html>

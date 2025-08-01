@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Ordering System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
+        .container { width: 80%; margin: 20px auto; }
+        .header { text-align: center; padding: 20px; background-color: #5cb85c; color: white; }
+        .restaurant-list { margin-top: 20px; }
+        .restaurant-card { background-color: #fff; padding: 15px; margin: 10px 0; border-radius: 5px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); }
+        .restaurant-card h3 { margin: 0; }
+        .restaurant-card p { color: #555; }
+        .btn { background-color: #5cb85c; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; }
+        .btn:hover { background-color: #4cae4c; }
+
+
+        .alert {
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+        font-weight: bold;
+        }
+        .alert-success {
+        background-color: #d4edda;
+        color: #155724;
+        }
+        .alert-info {
+        background-color: #d1ecf1;
+        color: #0c5460;
+        }
+        .alert-error {
+        background-color: #f8d7da;
+        color: #721c24;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Welcome to the Food Ordering System</h1>
+        <p>Select a restaurant to view the menu and place an order.</p>
+    </div>
+    <!-- Flash messages for success, info, and error alerts -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    
+    <div class="restaurant-list">
+        {% for restaurant in restaurants %}
+        <div class="restaurant-card">
+            <h3>{{ restaurant[1] }}</h3>
+            <p>{{ restaurant[2] }}</p>
+            <a href="{{ url_for('view_menu', restaurant_id=restaurant[0]) }}" class="btn">View Menu</a>
+        </div>
+        {% endfor %}
+        
+
+    </div>
+</div>
+
+<script>
+    window.onload = function() {
+        const alerts = document.querySelectorAll('.alert');
+        alerts.forEach(function(alert) {
+            setTimeout(function() {
+                alert.style.display = 'none';
+            }, 3000);
+        });
+    };
+</script>
+</body>
+</html>
+
+</body>
+</html>

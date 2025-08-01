@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - Food Ordering System</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
+        .container { width: 80%; margin: 20px auto; }
+        .header { text-align: center; padding: 20px; background-color: #5cb85c; color: white; }
+        .menu-item { background-color: #fff; padding: 15px; margin: 10px 0; border-radius: 5px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); }
+        .menu-item h4 { margin: 0; }
+        .menu-item p { color: #555; }
+        .menu-item span { font-weight: bold; }
+        .btn { background-color: #5cb85c; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; }
+        .btn:hover { background-color: #4cae4c; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Menu</h1>
+        <p>Choose items to place your order.</p>
+    </div>
+
+    <div class="menu-items">
+        {% for item in menu_items %}
+        <div class="menu-item">
+            <h4>{{ item[1] }}</h4>
+            <p>{{ item[2] }}</p>
+            <p><span>${{ item[3] }}</span></p>
+            <a href="{{ url_for('place_order', restaurant_id=restaurant_id, menu_item_id=item[0]) }}" class="btn">Add to Order</a>
+            <a href="{{ url_for('view_orders', restaurant_id=restaurant_id) }}" class="btn">View My Orders</a>
+
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+</body>
+</html>

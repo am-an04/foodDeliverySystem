@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Place Order - Food Ordering System</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
+        .container { width: 80%; margin: 20px auto; }
+        .header { text-align: center; padding: 20px; background-color: #5cb85c; color: white; }
+        .menu-item { background-color: #fff; padding: 15px; margin: 10px 0; border-radius: 5px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); }
+        .menu-item h4 { margin: 0; }
+        .menu-item p { color: #555; }
+        .menu-item span { font-weight: bold; }
+        .btn { background-color: #26cd26; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; }
+        .btn:hover { background-color: #27cb27; }
+        .form-group { margin-top: 20px; }
+        .form-group input { padding: 10px; width: 100%; }
+        .form-group button { padding: 10px 15px; background-color: #5cb85c; color: white; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Place Your Order</h1>
+        <p>Select menu items and submit to place your order.</p>
+    </div>
+
+    <form method="POST">
+        <div class="form-group">
+            <label for="user_id">User ID:</label>
+            <input type="text" id="user_id" name="user_id" required>
+        </div>
+
+        <div class="form-group">
+            <label>Select Menu Items:</label>
+            {% for item in menu_items %}
+            <div class="menu-item">
+                <input type="checkbox" name="menu_item_ids" value="{{ item[0] }}">
+                <h4>{{ item[1] }}</h4>
+                <p>{{ item[2] }}</p>
+                <p><span>${{ item[3] }}</span></p>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <label for="payment_mode">Select Payment Method:</label>
+        <select name="payment_mode" id="payment_mode" required>
+            <option value="COD">Cash on Delivery</option>
+            <option value="UPI">UPI</option>
+            <option value="Card">Credit/Debit Card</option>
+            <option value="Netbanking">Netbanking</option>
+        </select>
+        <br><br>
+
+        <div class="form-group">
+            <button type="submit">Place Order</button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
